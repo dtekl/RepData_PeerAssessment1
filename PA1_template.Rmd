@@ -8,9 +8,33 @@ output:
 
 ## Loading and preprocessing the data
 
+```{r}
+setwd("C:/Users/dtek_2/Documents/GitHub/RepData_PeerAssessment1")
+library(XML)
+narcissus <- read.csv(file = "activity.csv", header = TRUE)
+head(narcissus)
+summary(narcissus)
 
+```
 
 ## What is mean total number of steps taken per day?
+
+We can find the median and mean total number of steps by aggregating
+the steps by date and then taking the mean.
+
+Note:  8 days (e.g. 1 Oct 2012) have only NAs, and so when calculating the
+mean, they will just be ignored.
+
+```{r}
+
+tot_steps <- aggregate(narcissus$steps, by=list(narcissus$date), FUN=sum)
+colnames(tot_steps) <- c("date", "steps")
+mean_steps <- mean(tot_steps$steps, na.rm = TRUE)
+mean_steps
+median_steps <- median(tot_steps$steps, na.rm = TRUE)
+median_steps
+hist(tot_steps$steps, breaks=8)
+```
 
 
 
